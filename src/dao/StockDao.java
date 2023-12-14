@@ -21,12 +21,16 @@ public class StockDao {
         fileOut.close();
     }
     
-    public void load() throws FileNotFoundException, IOException, ClassNotFoundException{
-        var fileIn = new FileInputStream("Stock.ser");
-        var in = new ObjectInputStream(fileIn);
-        products = (ArrayList<Product>) in.readObject();
-        in.close();
-        fileIn.close();
+    public void load() throws IOException, ClassNotFoundException{
+        try{
+            var fileIn = new FileInputStream("Stock.ser");
+            var in = new ObjectInputStream(fileIn);
+            products = (ArrayList<Product>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch(FileNotFoundException ex){
+            
+        }
     }
     
     public Product getProduct(int code){
