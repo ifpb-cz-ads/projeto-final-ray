@@ -1,12 +1,32 @@
-package models;
+package dao;
 
+import java.io.*;
 import java.util.ArrayList;
+import models.Product;
 
-public class Stock {
-    private final ArrayList<Product> products;
+public class StockDao {
+    private int lastCode;
+    private ArrayList<Product> products;
 
-    public Stock() {
-        this.products = new ArrayList<>();
+    public StockDao() {
+        products = new ArrayList<Product>();
+    }
+    
+    
+    public void save() throws FileNotFoundException, IOException{
+        var fileOut = new FileOutputStream("Stock.ser");
+        var out = new ObjectOutputStream(fileOut);
+        out.writeObject(products);
+        out.close();
+        fileOut.close();
+    }
+    
+    public void load() throws FileNotFoundException, IOException, ClassNotFoundException{
+        var fileIn = new FileInputStream("Stock.ser");
+        var in = new ObjectInputStream(fileIn);
+        products = (ArrayList<Product>) in.readObject();
+        in.close();
+        fileIn.close();
     }
     
     public Product getProduct(int code){
@@ -14,6 +34,8 @@ public class Stock {
     }
     
     public void addNewProduct(Product product){
+        lastCode++;
+        product.setCode(lastCode);
         products.add(product);
     }
     
@@ -32,7 +54,7 @@ public class Stock {
     }
     
     public boolean removeProduct(int code, int amount){
-        Product product = getProduct(code);
+        var product = getProduct(code);
         
         if(product == null)
             return false;

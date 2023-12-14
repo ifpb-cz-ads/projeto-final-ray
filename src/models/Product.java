@@ -1,10 +1,9 @@
 package models;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
 
-public class Product {
-    private static final AtomicInteger count = new AtomicInteger(0); 
-    private final int code;
+public class Product implements Serializable{
+    private int code = 0;
     private String name;
     private float price;
     private String model;
@@ -12,7 +11,6 @@ public class Product {
     private int amount = 0;
 
     public Product(String name, float price, String description) {
-        this.code = count.incrementAndGet();
         this.name = name;
         this.price = price;
         this.description = description;
@@ -29,7 +27,11 @@ public class Product {
     public int getCode() {
         return code;
     }
-
+    
+    public void setCode(int code) {
+        this.code = code;
+    }
+    
     public String getName() {
         return name;
     }

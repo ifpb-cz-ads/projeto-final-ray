@@ -1,12 +1,11 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Transaction {
-    private static final AtomicInteger count = new AtomicInteger(0); 
-    private final int code;
+public class Transaction implements Serializable{
+    private int code;
     private final ArrayList<Product> products;
     private float totalValue;
     private float taxes;
@@ -19,11 +18,14 @@ public class Transaction {
         this.totalValue = totalValue;
         this.paymentMethod = paymentMethod;
         this.dateTime = dateTime;
-        this.code = count.incrementAndGet();
     }
 
     public int getCode() {
         return code;
+    }
+    
+    public void setCode(int code){
+        this.code = code;
     }
 
     public ArrayList<Product> getProducts() {
