@@ -13,6 +13,7 @@ import models.Transaction;
 import view.AddProductPopup;
 import view.AddPurchasePopup;
 import view.AddSalePopup;
+import view.TransactionDetailsPopup;
 
 /**
  *
@@ -80,6 +81,7 @@ public class TransactionsPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        details = new javax.swing.JButton();
         purchase = new javax.swing.JButton();
         sale = new javax.swing.JButton();
         remove = new javax.swing.JButton();
@@ -88,7 +90,16 @@ public class TransactionsPanel extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        details.setText("Ver Detalhes");
+        details.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detailsActionPerformed(evt);
+            }
+        });
+        jPanel1.add(details);
 
         purchase.setText("Adicionar Compra");
         purchase.addActionListener(new java.awt.event.ActionListener() {
@@ -180,8 +191,21 @@ public class TransactionsPanel extends javax.swing.JPanel {
         popup.setParent(this);
     }//GEN-LAST:event_purchaseActionPerformed
 
+    private void detailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsActionPerformed
+        var transaction = getSelectedTransaction();
+        if(transaction != null){
+            var popup = new TransactionDetailsPopup();
+            popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            popup.setVisible(true);
+            popup.setParent(this);
+            popup.setSelectedTransaction(transaction);
+            popup.updateData();
+        }
+    }//GEN-LAST:event_detailsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton details;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton purchase;

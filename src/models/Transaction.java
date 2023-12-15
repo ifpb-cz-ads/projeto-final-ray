@@ -35,7 +35,7 @@ public class Transaction implements Serializable{
         this.code = code;
     }
 
-    public Product getProducts() {
+    public Product getProduct() {
         return product;
     }
 

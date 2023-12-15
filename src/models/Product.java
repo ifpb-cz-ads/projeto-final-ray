@@ -8,7 +8,15 @@ public class Product implements Serializable{
     private float price;
     private String description;
     private int amount = 0;
-
+    
+    public Product(Product product){
+        this.code = product.code;
+        this.name = product.name;
+        this.price = product.price;
+        this.description = product.description;
+        this.amount = product.amount;
+    }
+    
     public Product(String name, float price, String description) {
         this.name = name;
         this.price = price;

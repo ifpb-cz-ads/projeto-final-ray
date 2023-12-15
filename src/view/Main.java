@@ -38,6 +38,7 @@ public class Main extends javax.swing.JFrame {
         Btns.setBackground(new java.awt.Color(102, 153, 255));
         Btns.setOpaque(false);
 
+        stock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         stock.setText("Estoque");
         stock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,7 +46,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        Transactions.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Transactions.setText("Transações");
+        Transactions.setBorderPainted(false);
+        Transactions.setFocusPainted(false);
         Transactions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TransactionsActionPerformed(evt);

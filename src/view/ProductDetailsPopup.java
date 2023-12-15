@@ -4,11 +4,6 @@
  */
 package view;
 
-import dao.StockDao;
-import extensions.FloatExtension;
-import extensions.IntExtension;
-import java.io.IOException;
-import javax.swing.JOptionPane;
 import models.Product;
 import view.panels.StockPanel;
 
@@ -16,11 +11,11 @@ import view.panels.StockPanel;
  *
  * @author silva
  */
-public class EditProductPopup extends javax.swing.JFrame {
+public class ProductDetailsPopup extends javax.swing.JFrame {
     private StockPanel parent;
     private Product selectedProduct;
     
-    public EditProductPopup() {
+    public ProductDetailsPopup() {
         initComponents();
     }
 
@@ -39,8 +34,7 @@ public class EditProductPopup extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        save = new javax.swing.JButton();
-        cancel = new javax.swing.JButton();
+        ok = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
@@ -58,27 +52,20 @@ public class EditProductPopup extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        save.setText("Salvar");
-        save.addActionListener(new java.awt.event.ActionListener() {
+        ok.setText("Ok");
+        ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                savejButton1ActionPerformed(evt);
+                okjButton2ActionPerformed(evt);
             }
         });
-        jPanel2.add(save);
-
-        cancel.setText("Cancelar");
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                canceljButton2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(cancel);
+        jPanel2.add(ok);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel27.setText("Preço (R$):");
 
+        priceField.setEditable(false);
         priceField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 priceFieldActionPerformed(evt);
@@ -97,11 +84,16 @@ public class EditProductPopup extends javax.swing.JFrame {
         codeField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         codeField.setText("1");
 
+        descriptionField.setEditable(false);
         descriptionField.setColumns(20);
         descriptionField.setRows(5);
 
+        amountField.setEditable(false);
+
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel26.setText("Nome:");
+
+        nameField.setEditable(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -158,56 +150,14 @@ public class EditProductPopup extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void canceljButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_canceljButton2ActionPerformed
+    private void okjButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okjButton2ActionPerformed
         dispose();
-    }//GEN-LAST:event_canceljButton2ActionPerformed
-
-    private void savejButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savejButton1ActionPerformed
-        var name = nameField.getText();
-        var description = descriptionField.getText();
-        float price;
-        int amount;
-        if("".equals(priceField.getText()) || "".equals(name) || "".equals(description) || "".equals(amountField.getText())){
-            JOptionPane.showMessageDialog(null, "Campo vazio!");
-            return;
-        }
-
-        if(FloatExtension.tryParseFloat(priceField.getText()) && IntExtension.tryParseInt(amountField.getText())){
-            price = Float.parseFloat(priceField.getText());
-            amount = Integer.parseInt(amountField.getText());
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Preço inválido ou quantidade inválida!");
-            return;
-        }
-
-        selectedProduct.setAmount(amount);
-        selectedProduct.setName(name);
-        selectedProduct.setDescription(description);
-        selectedProduct.setPrice(price);
-
-        StockDao stock = new StockDao();
-
-        try{
-            stock.load();
-            if(stock.updateProduct(selectedProduct)){
-                stock.save();
-                JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso.");
-            }
-            else
-            JOptionPane.showMessageDialog(null, "Não foi possivel atualizar o produto.");
-        } catch (ClassNotFoundException | IOException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o produto.");
-        }
-
-        parent.updateTable();
-        dispose();
-    }//GEN-LAST:event_savejButton1ActionPerformed
+    }//GEN-LAST:event_okjButton2ActionPerformed
 
     private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_priceFieldActionPerformed
-    
+
     public StockPanel getParent() {
         return parent;
     }
@@ -223,7 +173,10 @@ public class EditProductPopup extends javax.swing.JFrame {
     public void setSelectedProduct(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
     }
-    
+
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -238,28 +191,26 @@ public class EditProductPopup extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductDetailsPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductDetailsPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductDetailsPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProductDetailsPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditProductPopup().setVisible(true);
+                new ProductDetailsPopup().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField amountField;
-    private javax.swing.JButton cancel;
     private javax.swing.JLabel codeField;
     private javax.swing.JTextArea descriptionField;
     private javax.swing.JLabel jLabel26;
@@ -270,7 +221,7 @@ public class EditProductPopup extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField nameField;
+    private javax.swing.JButton ok;
     private javax.swing.JTextField priceField;
-    private javax.swing.JButton save;
     // End of variables declaration//GEN-END:variables
 }

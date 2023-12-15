@@ -99,6 +99,7 @@ public class AddProductPopup extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         create.setText("Adicionar");
@@ -127,7 +128,7 @@ public class AddProductPopup extends javax.swing.JFrame {
         var description = descriptionField.getText();
         float price;
 
-        if("".equals(priceField.getText()) || "".equals(name) || "".equals(description)){
+        if("".equals(priceField.getText()) || "".equals(name)){
             JOptionPane.showMessageDialog(null, "Campo vazio!");
             return;
         }

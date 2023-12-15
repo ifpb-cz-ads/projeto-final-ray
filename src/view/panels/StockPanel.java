@@ -14,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import models.Product;
 import view.AddProductPopup;
 import view.EditProductPopup;
+import view.ProductDetailsPopup;
 
 /**
  *
@@ -82,11 +83,15 @@ public class StockPanel extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
+        details = new javax.swing.JButton();
         add = new javax.swing.JButton();
         edit = new javax.swing.JButton();
         remove = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -118,7 +123,16 @@ public class StockPanel extends javax.swing.JPanel {
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        details.setText("Ver Detalhes");
+        details.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detailsActionPerformed(evt);
+            }
+        });
+        jPanel1.add(details);
 
         add.setText("Adicionar");
         add.addActionListener(new java.awt.event.ActionListener() {
@@ -186,13 +200,26 @@ public class StockPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_removeActionPerformed
 
+    private void detailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsActionPerformed
+        var product = getSelectedProduct();
+        if(product != null){
+            var popup = new ProductDetailsPopup();
+            popup.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            popup.setVisible(true);
+            popup.setParent(this);
+            popup.setSelectedProduct(product);
+            popup.updateData();
+        }
+    }//GEN-LAST:event_detailsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
+    private javax.swing.JButton details;
     private javax.swing.JButton edit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton remove;
-    private javax.swing.JTable table;
+    public javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

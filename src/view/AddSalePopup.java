@@ -233,6 +233,7 @@ public class AddSalePopup extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         add.setText("Adicionar");
@@ -303,7 +304,7 @@ public class AddSalePopup extends javax.swing.JFrame {
 
         if(checkProduct()){
             amount = Integer.parseInt(amountField.getText());
-            product = stock.getProduct(Integer.parseInt(productField.getText()));
+            product = new Product(stock.getProduct(Integer.parseInt(productField.getText())));
         }
         else
         return;
@@ -313,9 +314,10 @@ public class AddSalePopup extends javax.swing.JFrame {
             dao.load();
             product.setAmount(amount);
             float totalValue = product.getAmount() * product.getPrice();
-
+            stock.removeProduct(product.getCode(), amount);
             dao.addTransaction(new Transaction(product, totalValue, cnpj, phone, paymentMethod, LocalDateTime.now(), TransactionType.venda));
             dao.save();
+            stock.save();
             JOptionPane.showMessageDialog(null, "Transação adicionada com sucesso.");
 
             parent.updateTable();
