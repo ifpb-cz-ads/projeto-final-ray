@@ -6,7 +6,6 @@ public class Product implements Serializable{
     private int code = 0;
     private String name;
     private float price;
-    private String model;
     private String description;
     private int amount = 0;
 
@@ -46,14 +45,6 @@ public class Product implements Serializable{
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public String getDescription() {

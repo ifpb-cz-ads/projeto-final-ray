@@ -4,19 +4,20 @@ import java.io.*;
 import java.util.ArrayList;
 import models.Product;
 
-public class StockDao {
+public class StockDao implements Serializable{
     private int lastCode;
     private ArrayList<Product> products;
 
     public StockDao() {
         products = new ArrayList<Product>();
+        lastCode = 0;
     }
     
     
     public void save() throws FileNotFoundException, IOException{
         var fileOut = new FileOutputStream("Stock.ser");
         var out = new ObjectOutputStream(fileOut);
-        out.writeObject(products);
+        out.writeObject(this);
         out.close();
         fileOut.close();
     }
@@ -25,7 +26,10 @@ public class StockDao {
         try{
             var fileIn = new FileInputStream("Stock.ser");
             var in = new ObjectInputStream(fileIn);
-            products = (ArrayList<Product>) in.readObject();
+            var obj = (StockDao) in.readObject();
+            this.products = obj.products;
+            this.lastCode = obj.lastCode;
+            
             in.close();
             fileIn.close();
         } catch(FileNotFoundException ex){
@@ -41,6 +45,18 @@ public class StockDao {
         lastCode++;
         product.setCode(lastCode);
         products.add(product);
+    }
+    
+    public boolean updateProduct(Product product){
+        var p = getProduct(product.getCode());
+        if(p != null){
+            p.setAmount(product.getAmount());
+            p.setDescription(product.getDescription());
+            p.setName(product.getName());
+            p.setPrice(product.getPrice());
+            return true;
+        }
+        return false;
     }
     
     public boolean deleteProduct(int code){

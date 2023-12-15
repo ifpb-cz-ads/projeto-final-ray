@@ -1,25 +1,24 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package view.panels;
+package view;
 
 import dao.StockDao;
+import extensions.FloatExtension;
 import java.awt.BorderLayout;
 import java.io.IOException;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import models.Product;
+import view.panels.StockPanel;
 
-/**
- *
- * @author silva
- */
-public class NewProductPanel extends javax.swing.JPanel {
-
+public class AddProductPopup extends javax.swing.JFrame {
+    private StockPanel parent;
     /**
-     * Creates new form NewProductPanel
+     * Creates new form ProductPopup
      */
-    public NewProductPanel() {
+    public AddProductPopup() {
         initComponents();
     }
 
@@ -33,19 +32,21 @@ public class NewProductPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        descriptionField = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane = new javax.swing.JScrollPane();
-        descriptionField = new javax.swing.JTextArea();
 
-        setPreferredSize(new java.awt.Dimension(800, 500));
-        setLayout(new java.awt.GridBagLayout());
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        descriptionField.setColumns(20);
+        descriptionField.setRows(5);
 
         jButton1.setText("Criar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -55,7 +56,7 @@ public class NewProductPanel extends javax.swing.JPanel {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Name:");
+        jLabel4.setText("Nome:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Preço:");
@@ -63,44 +64,35 @@ public class NewProductPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Descrição:");
 
-        descriptionField.setColumns(20);
-        descriptionField.setRows(5);
-        jScrollPane.setViewportView(descriptionField);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPane))
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(80, 80, 80))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabel4)
-                                .addGap(6, 6, 6)
-                                .addComponent(nameField))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel5)
-                                .addGap(6, 6, 6)
-                                .addComponent(priceField)))
-                        .addGap(106, 106, 106)))
-                .addGap(79, 79, 79))
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(descriptionField, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(priceField)
+                    .addComponent(nameField))
+                .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(nameField))
@@ -109,28 +101,30 @@ public class NewProductPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(priceField))
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jScrollPane))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                    .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
-        add(jPanel1, new java.awt.GridBagConstraints());
+        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         var name = nameField.getText();
         var description = descriptionField.getText();
         float price;
-        
+
         if("".equals(priceField.getText()) || "".equals(name) || "".equals(description)){
             JOptionPane.showMessageDialog(null, "Campo vazio!");
             return;
         }
 
-        if(tryParseFloat(priceField.getText()))
+        if(FloatExtension.tryParseFloat(priceField.getText()))
         price = Float.parseFloat(priceField.getText());
         else{
             JOptionPane.showMessageDialog(null, "Preço inválido!");
@@ -140,6 +134,7 @@ public class NewProductPanel extends javax.swing.JPanel {
         Product product = new Product(name, price, description);
 
         StockDao stock = new StockDao();
+
         try{
             stock.load();
             stock.addNewProduct(product);
@@ -148,17 +143,57 @@ public class NewProductPanel extends javax.swing.JPanel {
         } catch (ClassNotFoundException | IOException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possível adicionar o nove produto.");
         }
+        
+        parent.updateTable();
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public JPanel getParent() {
+        return parent;
+    }
 
-    public boolean tryParseFloat(String value) {
-        try {
-            Float.parseFloat(value);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+    public void setParent(StockPanel parent) {
+        this.parent = parent;
     }
     
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AddProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AddProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AddProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AddProductPopup.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AddProductPopup().setVisible(true);
+            }
+        });
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descriptionField;
     private javax.swing.JButton jButton1;
@@ -166,7 +201,6 @@ public class NewProductPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField priceField;
     // End of variables declaration//GEN-END:variables

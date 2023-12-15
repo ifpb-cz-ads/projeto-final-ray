@@ -6,7 +6,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import view.panels.NewProductPanel;
+import view.panels.StockPanel;
 
 /**
  *
@@ -15,7 +15,7 @@ import view.panels.NewProductPanel;
 public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
-        display(new NewProductPanel());
+        display(new StockPanel());
     }
     
     @SuppressWarnings("unchecked")
@@ -23,33 +23,57 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         NavigationBar = new javax.swing.JPanel();
-        addProduct = new javax.swing.JButton();
+        Btns = new javax.swing.JPanel();
+        stock = new javax.swing.JButton();
         container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 500));
 
-        NavigationBar.setBackground(new java.awt.Color(204, 204, 204));
+        NavigationBar.setBackground(new java.awt.Color(51, 102, 255));
+        NavigationBar.setLayout(new java.awt.BorderLayout());
 
-        addProduct.setText("Adicionar Produto");
-        addProduct.addActionListener(new java.awt.event.ActionListener() {
+        Btns.setBackground(new java.awt.Color(102, 153, 255));
+        Btns.setOpaque(false);
+
+        stock.setText("Estoque");
+        stock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addProductActionPerformed(evt);
+                stockActionPerformed(evt);
             }
         });
-        NavigationBar.add(addProduct);
+
+        javax.swing.GroupLayout BtnsLayout = new javax.swing.GroupLayout(Btns);
+        Btns.setLayout(BtnsLayout);
+        BtnsLayout.setHorizontalGroup(
+            BtnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BtnsLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(stock)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        BtnsLayout.setVerticalGroup(
+            BtnsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BtnsLayout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addComponent(stock)
+                .addContainerGap(328, Short.MAX_VALUE))
+        );
+
+        NavigationBar.add(Btns, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(NavigationBar, java.awt.BorderLayout.LINE_START);
 
+        container.setBackground(new java.awt.Color(255, 255, 255));
         container.setLayout(new java.awt.CardLayout());
         getContentPane().add(container, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProductActionPerformed
-        display(new NewProductPanel());
-    }//GEN-LAST:event_addProductActionPerformed
+    private void stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stockActionPerformed
+        display(new StockPanel());
+    }//GEN-LAST:event_stockActionPerformed
     
     private void display(Component panel){
         container.removeAll();
@@ -94,8 +118,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Btns;
     private javax.swing.JPanel NavigationBar;
-    private javax.swing.JButton addProduct;
     private javax.swing.JPanel container;
+    private javax.swing.JButton stock;
     // End of variables declaration//GEN-END:variables
 }
