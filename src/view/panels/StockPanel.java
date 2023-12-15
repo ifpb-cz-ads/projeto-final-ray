@@ -84,6 +84,7 @@ public class StockPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         add = new javax.swing.JButton();
         edit = new javax.swing.JButton();
+        remove = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -136,6 +137,14 @@ public class StockPanel extends javax.swing.JPanel {
         });
         jPanel1.add(edit);
 
+        remove.setText("Remover");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(remove);
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -158,12 +167,32 @@ public class StockPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_editActionPerformed
 
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        var product = getSelectedProduct();
+        if(product != null){
+            int option = JOptionPane.showConfirmDialog(null, "Você tem certeza?", "selecione uma opção", 0);
+            if(option == 0){
+                try{
+                    if(stock.deleteProduct(product.getCode())){
+                        stock.save();
+                        updateTable();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "Não foi possível remover o produto.");
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível remover o produto.");
+                }
+            }
+        }
+    }//GEN-LAST:event_removeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add;
     private javax.swing.JButton edit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton remove;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
