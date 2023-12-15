@@ -4,28 +4,35 @@ import java.io.*;
 import java.util.ArrayList;
 import models.Transaction;
 
-public class TransactionDao {
-    private int lastCode = 0;
+public class TransactionDao implements Serializable{
+    private int lastCode;
     private ArrayList<Transaction> transactions;
 
     public TransactionDao() {
         this.transactions = new ArrayList<Transaction>();
+        this.lastCode = 0;
     }
     
     public void save() throws FileNotFoundException, IOException{
         var fileOut = new FileOutputStream("Transactions.ser");
         var out = new ObjectOutputStream(fileOut);
-        out.writeObject(transactions);
+        out.writeObject(this);
         out.close();
         fileOut.close();
     }
     
-    public void load() throws FileNotFoundException, IOException, ClassNotFoundException{
-        var fileIn = new FileInputStream("Transactions.ser");
-        var in = new ObjectInputStream(fileIn);
-        transactions = (ArrayList<Transaction>) in.readObject();
-        in.close();
-        fileIn.close();
+    public void load() throws IOException, ClassNotFoundException{
+        try{
+            var fileIn = new FileInputStream("Transactions.ser");
+            var in = new ObjectInputStream(fileIn);
+            var dao = (TransactionDao) in.readObject();
+            this.lastCode = dao.lastCode;
+            this.transactions = dao.transactions;
+            in.close();
+            fileIn.close();
+        } catch(FileNotFoundException ex){
+            
+        }
     }
     
     public void addTransaction(Transaction transaction){
@@ -39,14 +46,10 @@ public class TransactionDao {
     }
     
     public boolean deleteTransaction(int code){
-        return transactions.removeIf(p -> p.getCode() == code);
+        return transactions.removeIf(t -> t.getCode() == code);
     }
     
     public ArrayList<Transaction> getTransactions() {
         return transactions;
-    }
-
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
     }
 }

@@ -33,27 +33,21 @@ public class AddProductPopup extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         descriptionField = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         priceField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        create = new javax.swing.JButton();
+        cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         descriptionField.setColumns(20);
         descriptionField.setRows(5);
-
-        jButton1.setText("Criar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Nome:");
@@ -83,11 +77,7 @@ public class AddProductPopup extends javax.swing.JFrame {
                     .addComponent(descriptionField, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addComponent(priceField)
                     .addComponent(nameField))
-                .addContainerGap(123, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,17 +94,35 @@ public class AddProductPopup extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(112, 112, 112))
         );
 
-        getContentPane().add(jPanel1, new java.awt.GridBagConstraints());
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        create.setText("Adicionar");
+        create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createActionPerformed(evt);
+            }
+        });
+        jPanel2.add(create);
+
+        cancel.setText("Cancelar");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cancel);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         var name = nameField.getText();
         var description = descriptionField.getText();
         float price;
@@ -140,13 +148,18 @@ public class AddProductPopup extends javax.swing.JFrame {
             stock.addNewProduct(product);
             stock.save();
             JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso.");
+            
+            parent.updateTable();
+            dispose();
         } catch (ClassNotFoundException | IOException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o nove produto.");
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar o produto.");
         }
         
-        parent.updateTable();
+    }//GEN-LAST:event_createActionPerformed
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_cancelActionPerformed
     
     public JPanel getParent() {
         return parent;
@@ -195,12 +208,14 @@ public class AddProductPopup extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancel;
+    private javax.swing.JButton create;
     private javax.swing.JTextArea descriptionField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField priceField;
     // End of variables declaration//GEN-END:variables

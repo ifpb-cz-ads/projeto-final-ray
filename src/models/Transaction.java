@@ -6,18 +6,25 @@ import java.util.ArrayList;
 
 public class Transaction implements Serializable{
     private int code;
-    private final ArrayList<Product> products;
+    private final Product product;
     private float totalValue;
-    private float taxes;
-    private String paymentMethod;
+    private String dealerIdentity;
+    private String dealerPhoneNumber;
+    private PaymentMethod paymentMethod;
     private LocalDateTime dateTime;
-    private boolean isPayed = false;
+    private TransactionType type;
+    
+    public enum TransactionType { venda, compra};
+    public enum PaymentMethod { boleto, cartaodecredito, aVista}; 
 
-    public Transaction(ArrayList<Product> products, float totalValue, String paymentMethod, LocalDateTime dateTime) {
-        this.products = products;
+    public Transaction(Product product, float totalValue, String dealerIdentity, String dealerPhoneNumber, PaymentMethod paymentMethod, LocalDateTime dateTime, TransactionType type) {
+        this.product = product;
         this.totalValue = totalValue;
+        this.dealerIdentity = dealerIdentity;
+        this.dealerPhoneNumber = dealerPhoneNumber;
         this.paymentMethod = paymentMethod;
         this.dateTime = dateTime;
+        this.type = type;
     }
 
     public int getCode() {
@@ -28,8 +35,8 @@ public class Transaction implements Serializable{
         this.code = code;
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public Product getProducts() {
+        return product;
     }
 
     public float getTotalValue() {
@@ -40,19 +47,27 @@ public class Transaction implements Serializable{
         this.totalValue = totalValue;
     }
 
-    public float getTaxes() {
-        return taxes;
+    public String getDealerIdentity() {
+        return dealerIdentity;
     }
 
-    public void setTaxes(float taxes) {
-        this.taxes = taxes;
+    public void setDealerIdentity(String dealer) {
+        this.dealerIdentity = dealer;
     }
 
-    public String getPaymentMethod() {
+    public String getDealerPhoneNumber() {
+        return dealerPhoneNumber;
+    }
+
+    public void setDealerPhoneNumber(String phoneNumber) {
+        this.dealerPhoneNumber = phoneNumber;
+    }
+
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -64,11 +79,11 @@ public class Transaction implements Serializable{
         this.dateTime = dateTime;
     }
 
-    public boolean isIsPayed() {
-        return isPayed;
+    public TransactionType getType() {
+        return type;
     }
 
-    public void setIsPayed(boolean isPayed) {
-        this.isPayed = isPayed;
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 }
